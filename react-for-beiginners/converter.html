@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <!--react는 그냥 엔진이라고 보면 되고, react-dom은 react element를 가져다가 html로 작성하는 기능을 도와준다.-->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function App() {
+      const [amount, setAmount] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+
+      const reset = () => setAmount(0);
+      const onFlip = () => {
+        reset();
+        setFlipped((current) => !current);
+      };
+
+      return (
+        <div>
+          <h1 className="hi">Super Converter</h1>
+
+          <div>
+            <label htmlFor="minutes">Minutes</label>
+
+            <input
+              value={flipped ? amount * 60 : amount}
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={flipped}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="hours">Hours</label>
+            <input
+              id="hours"
+              value={flipped ? amount : Math.round(amount / 60)}
+              placeholder="Hour"
+              type="number"
+              onChange={onChange}
+              disabled={!flipped}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Flip</button>
+        </div>
+      );
+    }
+
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root); //<!--show the react element to the user in div root-->
+    //React JS는 Javascript를 통해 HTML로 보여준다.
+    //기존에 Vanilla HTML처럼 HTML버튼을 만들고, 기능을 넣고.. 하는 것과 정반대이다
+    //React JS를 이용해서 element를 업데이트 하는 과정을 더 효율적으로 할 수 있다.
+    //이전 Vanilla HTML처럼 addEventlistener, 그리고 function과 같은 것들을 추가로 할 필요가 없다.
+  </script>
+</html>
